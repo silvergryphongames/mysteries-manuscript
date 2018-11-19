@@ -10,6 +10,8 @@ variables:
 linting:
   image: benovermyer/docbuild:master
   stage: test
+  before_script:
+    - pip install proselint
   script:
     - mdl -s markdown-style.rb manuscript/
     - proselint manuscript/*.md
