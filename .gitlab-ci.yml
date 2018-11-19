@@ -8,16 +8,14 @@ variables:
   BUCKET_NAME: playtest.silvergryphongames.com
 
 linting:
-  image: benovermyer/docbuild:master
+  image: benovermyer/docbuild:latest
   stage: test
-  before_script:
-    - pip install proselint
   script:
     - mdl -s markdown-style.rb manuscript/
     - proselint manuscript/*.md
 
 pandoc:
-  image: benovermyer/docbuild:master
+  image: benovermyer/docbuild:latest
   stage: build
   script:
     - sed -i "s/DATE/`date +'%B %e, %Y'`/g" front-page.md
