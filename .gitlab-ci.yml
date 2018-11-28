@@ -12,7 +12,6 @@ linting:
   stage: test
   script:
     - mdl -s markdown-style.rb manuscript/
-    - proselint manuscript/*.md
 
 pandoc:
   image: benovermyer/docbuild:latest
@@ -21,7 +20,7 @@ pandoc:
     - sed -i "s/DATE/`date +'%B %e, %Y'`/g" front-page.md
     - mkdir -p ./build
     - pandoc --version
-    - pandoc --template=mysteries.latex --latex-engine=xelatex -f markdown -s -o ./build/mysteriesofabrokenworld.pdf front-page.md manuscript/*.md metadata.yaml
+    - pandoc --template=mysteries.latex -f markdown -s -o ./build/mysteriesofabrokenworld.pdf front-page.md manuscript/*.md metadata.yaml
   artifacts:
     paths:
       - ./build
