@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: benovermyer/docbuild:latest
-    working_directory: ~/repo
+    working_directory: /tmp/workspace
 
     steps:
       - checkout
@@ -14,16 +14,18 @@ jobs:
       - store_artifacts: 
           path: ./build
       - persist_to_workspace:
-          root: ~/repo
+          root: /tmp/workspace
           paths:
             - build
   deploy:
     docker:
       - image: python:latest
-    working_directory: ~/repo
+    working_directory: /tmp/workspace
     environment:
       AWS_DEFAULT_REGION: us-east-2
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - run: pip install awscli
       - run:
           name: Deploy to S3
