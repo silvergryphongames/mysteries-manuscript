@@ -13,10 +13,10 @@ jobs:
       - run: pandoc --template=mysteries.latex -f markdown -s -o ./build/mysteriesofabrokenworld.pdf front-page.md manuscript/*.md metadata.yaml
       - store_artifacts: 
           path: ./build
-      - save_cache:
-          key: assets-{{ .BuildNum }}
+      - persist_to_workspace:
+          root: ~/repo
           paths:
-            - ~/repo/build
+            - build
   deploy:
     docker:
       - image: python:latest
@@ -24,8 +24,6 @@ jobs:
     environment:
       AWS_DEFAULT_REGION: us-east-2
     steps:
-      - restore_cache:
-          key: assets-{{ .BuildNum }}
       - run: pip install awscli
       - run:
           name: Deploy to S3
