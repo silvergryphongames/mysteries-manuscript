@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Clear Cloudflare cache
           command: |
-            curl -X DELETE -H "X-Auth-Key:$CLOUDFLARE_API_KEY" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" "https://api.cloudflare.com/client/v4/zones/d090b48a5eb04b066f415c2d1755616d/purge_cache" --data '{"files": ["http://playtest.silvergryphongames.com/mysteriesofabrokenworld.pdf"]}'
+            curl -X DELETE -H "X-Auth-Key:$CLOUDFLARE_API_KEY" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" -H "Content-Type:application/json" "https://api.cloudflare.com/client/v4/zones/d090b48a5eb04b066f415c2d1755616d/purge_cache" --data '{"files": ["http://playtest.silvergryphongames.com/mysteriesofabrokenworld.pdf"]}'
 
 workflows:
   version: 2
