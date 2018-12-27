@@ -31,6 +31,10 @@ jobs:
           name: Deploy to S3
           command: |
             aws s3 cp ./build/ s3://playtest.silvergryphongames.com/ --recursive --exclude "*" --include "*.pdf"
+      - run:
+          name: Clear Cloudflare cache
+          command: |
+            curl -X DELETE -H "X-Auth-Key:$CLOUDFLARE_API_KEY" -H "X-Auth-Email:$CLOUDFLARE_EMAIL" "https://api.cloudflare.com/client/v4/zones//purge_cache" --data '{"files": ["http://playtest.silvergryphongames.com/mysteriesofabrokenworld.pdf"]}'
 
 workflows:
   version: 2
